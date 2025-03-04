@@ -21,7 +21,7 @@ public class Expediente {
     @Length(max = 50)
     private String referencia;
 
-    @OneToMany(mappedBy = "expediente")
+    @OneToMany(orphanRemoval = true, mappedBy = "expediente", cascade = { CascadeType.PERSIST, CascadeType.MERGE })
     private List<Documento> documento = new ArrayList<>();
 
 

@@ -1,5 +1,7 @@
 package es.santander.ascender.ejerc007.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -14,6 +16,7 @@ public class Documento {
 
     private String nombre;
 
+    @JsonIgnore
     @ManyToOne()
     private Expediente expediente;
 

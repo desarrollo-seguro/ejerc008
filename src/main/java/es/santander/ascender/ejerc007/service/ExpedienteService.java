@@ -6,13 +6,18 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import es.santander.ascender.ejerc007.model.Documento;
 import es.santander.ascender.ejerc007.model.Expediente;
+import es.santander.ascender.ejerc007.repository.DocumentoRepository;
 import es.santander.ascender.ejerc007.repository.ExpedienteRepository;
 
 @Service
 public class ExpedienteService {
     @Autowired
     private ExpedienteRepository expedienteRepository;
+
+    @Autowired
+    private DocumentoRepository documentoRepository;
 
     // Create
     public Expediente createExpediente(Expediente expediente) {
@@ -35,6 +40,12 @@ public class ExpedienteService {
         if (expedienteOptional.isPresent()) {
             Expediente expediente = expedienteOptional.get();
             expediente.setReferencia(expedienteDetails.getReferencia());
+            List<Documento> documentos = expediente.getDocumento();
+
+            documentos.clear();
+            documentos.addAll(expedienteDetails.getDocumento());
+            documentos.stream().forEach(d -> d.setExpediente(expediente));
+
             //Do not update the document list in this endpoint
             return expedienteRepository.save(expediente);
         }

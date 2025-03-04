@@ -27,7 +27,9 @@ public class ExpedienteController {
     // Create
     @PostMapping
     public ResponseEntity<Expediente> createExpediente(@RequestBody Expediente expediente) {
+        expediente.getDocumento().forEach(d -> d.setExpediente(expediente));
         Expediente createdExpediente = expedienteService.createExpediente(expediente);
+
         return new ResponseEntity<>(createdExpediente, HttpStatus.CREATED);
     }
 
@@ -52,6 +54,7 @@ public class ExpedienteController {
     // Update
     @PutMapping("/{id}")
     public ResponseEntity<Expediente> updateExpediente(@PathVariable Long id, @RequestBody Expediente expedienteDetails) {
+               
         Expediente updatedExpediente = expedienteService.updateExpediente(id, expedienteDetails);
         if (updatedExpediente != null) {
             return new ResponseEntity<>(updatedExpediente, HttpStatus.OK);
