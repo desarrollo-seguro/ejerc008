@@ -21,7 +21,7 @@ public class Expediente {
     @Length(max = 50)
     private String referencia;
 
-    @OneToMany(mappedBy = "expediente", cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "expediente")
     private List<Documento> documento = new ArrayList<>();
 
 
