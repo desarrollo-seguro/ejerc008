@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import es.santander.ascender.ejerc007.model.Documento;
 import es.santander.ascender.ejerc007.model.Expediente;
@@ -12,12 +13,10 @@ import es.santander.ascender.ejerc007.repository.DocumentoRepository;
 import es.santander.ascender.ejerc007.repository.ExpedienteRepository;
 
 @Service
+@Transactional
 public class ExpedienteService {
     @Autowired
     private ExpedienteRepository expedienteRepository;
-
-    @Autowired
-    private DocumentoRepository documentoRepository;
 
     // Create
     public Expediente createExpediente(Expediente expediente) {
@@ -25,11 +24,13 @@ public class ExpedienteService {
     }
 
     // Read (all)
+    @Transactional(readOnly = true)
     public List<Expediente> getAllExpedientes() {
         return expedienteRepository.findAll();
     }
 
     // Read (by ID)
+    @Transactional(readOnly = true)
     public Optional<Expediente> getExpedienteById(Long id) {
         return expedienteRepository.findById(id);
     }
