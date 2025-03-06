@@ -4,6 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
@@ -24,6 +25,10 @@ public class Persona {
     
     @Pattern(regexp = "^[0-9]{9}$")
     private String telefono;
+
+    @ManyToOne
+    private Provincia provincia;
+
 
     public Persona() {
     }
@@ -79,6 +84,14 @@ public class Persona {
         this.telefono = telefono;
     }
 
+    public Provincia getProvincia() {
+        return provincia;
+    }
+
+
+    public void setProvincia(Provincia provincia) {
+        this.provincia = provincia;
+    }
 
     @Override
     public int hashCode() {
@@ -105,6 +118,9 @@ public class Persona {
             return false;
         return true;
     }
+
+
+
 
 
 }
