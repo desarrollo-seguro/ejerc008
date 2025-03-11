@@ -38,6 +38,9 @@ public class ProvinciaController {
     // Read (by ID)
     @GetMapping("/{id}")
     public ResponseEntity<Provincia> getProvinciaById(@PathVariable Long id) {
+        if (id.longValue() == -1) {
+            throw new MyBadDataException("No es válido", id);
+        }
         Optional<Provincia> provincia = provinciaService.getProvinciaById(id);
         return provincia.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
