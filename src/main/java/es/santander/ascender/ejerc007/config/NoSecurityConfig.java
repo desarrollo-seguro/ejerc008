@@ -16,35 +16,20 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.core.userdetails.User;
 
-@Profile("!no-security")
+@Profile("no-security")
 @Configuration
-@EnableGlobalMethodSecurity(prePostEnabled = true)
+
 @EnableWebSecurity
-public class SecurityConfig {
+public class NoSecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
             .authorizeRequests()
-                .requestMatchers("/swagger-ui/**").permitAll()  // URLs públicas
-                .requestMatchers("/v3/**").permitAll()  // URLs públicas
-                .requestMatchers("/api/**").authenticated()
-                .requestMatchers("/actuator/**").authenticated()
-                .anyRequest().denyAll()
-            .and()
-            .httpBasic()  // Habilita autenticación básica
+                .anyRequest().permitAll()
             .and()
             .csrf().disable();  // Deshabilita CSRF para simplificar la configuración
 
         return http.build();
-    }
-
-    @Bean
-    public UserDetailsService userDetailsService() {
-        InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
-        manager.createUser(User.withUsername("usuario1").password("{noop}contraseña1").roles("USER").build());
-        manager.createUser(User.withUsername("usuario2").password("{noop}contraseña2").roles("ADMIN").build());
-        manager.createUser(User.withUsername("usuario3").password("{noop}contraseña3").roles("USER").build());
-        return manager;
     }
 }
