@@ -6,10 +6,13 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import ch.qos.logback.classic.Logger;
+import es.santander.ascender.ejerc007.model.Persona;
 import es.santander.ascender.ejerc007.model.Provincia;
 import es.santander.ascender.ejerc007.repository.PersonaRepository;
 import es.santander.ascender.ejerc007.repository.ProvinciaRepository;
@@ -57,6 +60,20 @@ public class ProvinciaService {
         }
         return null; // or throw an exception
     }
+
+    public int getProvinciaUsuario() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentUsername = null;
+
+        if (authentication != null && authentication.isAuthenticated() && !authentication.getPrincipal().equals("anonymousUser") ){
+             currentUsername = authentication.getName();
+        }
+       
+       
+        throw new UnsupportedOperationException("Aún no chaval");
+    }
+
+
 
     public void deleteProvincia(Long id) {
     
